@@ -46,7 +46,12 @@ const App = () => {
         </div>
       )}
       <div className="d-none">
-        <input type="file" ref={fileInputRef} onChange={onFileSelect} />
+        <input
+          accept=".csv"
+          type="file"
+          ref={fileInputRef}
+          onChange={onFileSelect}
+        />
       </div>
     </div>
   );

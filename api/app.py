@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+import pandas as pd
 app = Flask(__name__)
 
 
@@ -9,6 +10,7 @@ def index():
 
 @app.route('/save', methods=['POST'])
 def save_data():
-    data = request.files['file']
-    print(data)
+    file = request.files['file']
+    df = pd.read_csv(file)
+    print(df.head())
     return jsonify({})
