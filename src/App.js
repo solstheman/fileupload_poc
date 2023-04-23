@@ -1,5 +1,17 @@
 import { useRef, useState } from "react";
 
+const saveFile = (file) => {
+  const documentData = new FormData();
+  documentData.append("file", file);
+  fetch("/save", {
+    method: "POST",
+    body: documentData,
+  }).then(async (res) => {
+    const data = await res.json();
+    console.log(data);
+  });
+};
+
 const App = () => {
   const [file, setFile] = useState(null);
   const fileInputRef = useRef();
@@ -7,6 +19,10 @@ const App = () => {
   const onFileSelect = (e) => {
     const file = e.target.files[0];
     setFile(file);
+  };
+
+  const onSubmit = () => {
+    saveFile(file);
   };
 
   return (
@@ -24,15 +40,13 @@ const App = () => {
           >
             X
           </div>
+          <div className="row" onClick={onSubmit}>
+            <button>Submit</button>
+          </div>
         </div>
       )}
       <div className="d-none">
-        <input
-          type="file"
-          accept=".csv"
-          ref={fileInputRef}
-          onChange={onFileSelect}
-        />
+        <input type="file" ref={fileInputRef} onChange={onFileSelect} />
       </div>
     </div>
   );
