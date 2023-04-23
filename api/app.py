@@ -11,6 +11,7 @@ def index():
 @app.route('/save', methods=['POST'])
 def save_data():
     file = request.files['file']
-    df = pd.read_csv(file)
-    print(df.head())
-    return jsonify({})
+    customer_data = pd.read_csv(file)
+    print(customer_data.head())
+
+    return jsonify({'result': 'success'})
