@@ -8,6 +8,8 @@
 
 ## Install mysql-server and run it (https://dev.mysql.com/downloads/mysql/)
 
+## Create a database called fileupload_poc
+
 ## Run npm run start
 
 ## Run npm run start-backend

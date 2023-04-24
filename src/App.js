@@ -1,3 +1,4 @@
+import "./App.css";
 import { useRef, useState } from "react";
 
 const saveFile = (file) => {
@@ -26,32 +27,43 @@ const App = () => {
   };
 
   return (
-    <div className="text-center mt-4">
-      <button onClick={() => fileInputRef.current.click()}>Upload</button>
-      {file && (
-        <div className="row justify-content-center">
-          <div className="col align-self-end">
-            {file.name} - {Math.round(file.size / 1024)}kb
-          </div>
-          <div
-            className="col-1 align-self-start cursor-pointer"
-            onClick={() => setFile(null)}
-            role="button"
-          >
-            X
-          </div>
-          <div className="row" onClick={onSubmit}>
-            <button>Submit</button>
+    <div className="row">
+      <div className="col-3 nav_panel">
+        <div className="row">
+          <div className="col-12 text-center">
+            <img src="https://care-harmony.com/wp-content/uploads/2022/02/careharmony_logo.png"></img>
           </div>
         </div>
-      )}
-      <div className="d-none">
-        <input
-          accept=".csv"
-          type="file"
-          ref={fileInputRef}
-          onChange={onFileSelect}
-        />
+      </div>
+      <div className="col-9">
+        <div className="text-center mt-4">
+          <button onClick={() => fileInputRef.current.click()}>Upload</button>
+          {file && (
+            <div className="row justify-content-center">
+              <div className="col align-self-end">
+                {file.name} - {Math.round(file.size / 1024)}kb
+              </div>
+              <div
+                className="col-1 align-self-start cursor-pointer"
+                onClick={() => setFile(null)}
+                role="button"
+              >
+                X
+              </div>
+              <div className="row" onClick={onSubmit}>
+                <button>Submit</button>
+              </div>
+            </div>
+          )}
+          <div className="d-none">
+            <input
+              accept=".csv"
+              type="file"
+              ref={fileInputRef}
+              onChange={onFileSelect}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
