@@ -39,18 +39,16 @@ const UploadPage = () => {
     saveFile(file, successCallback, failureCallback);
   };
 
-  const downloadTemplate = () => {
-    let csvContent = "name, email";
-    const blob = new Blob([csvContent], { type: "text/csv" });
-    const href = window.URL.createObjectURL(blob);
-    const clickDownloader = () => {
-      const element = document.getElementById("downloadRef");
-      if (!!element) {
-        element.click();
-      }
-    };
-    alert("template downloaded");
+  let csvContent = "name,email,blood_type,last_appointment";
+  const blob = new Blob([csvContent], { type: "text/csv" });
+  const href = window.URL.createObjectURL(blob);
+  const clickDownloader = () => {
+    const element = document.getElementById("downloadRef");
+    if (!!element) {
+      element.click();
+    }
   };
+
   return (
     <>
       <div className="row justify-content-center">
@@ -71,7 +69,13 @@ const UploadPage = () => {
           </a>
         </div>
         <div className="text-center col-3">
-          <a className="secondary_button" onClick={() => downloadTemplate()}>
+          <a
+            href={href}
+            download={"patient_data_template.csv"}
+            className="hidden"
+            id="downloadRef"
+          />
+          <a className="secondary_button" onClick={clickDownloader}>
             Download Template
           </a>
         </div>

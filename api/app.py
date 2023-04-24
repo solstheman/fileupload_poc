@@ -32,11 +32,16 @@ def patient():
 def save_data():
     file = request.files['file']
     customer_data = pd.read_csv(file)
-    print(customer_data.head())
+    data_string = 'INSERT INTO user_data (name, email, blood_type, last_appointment) VALUES '
+    for index, row in customer_data.iterrows():
+        if index > 0:
+            data_string += ', '
+        data_string += f'(\'{row["name"]}\', \'{row["email"]}\', \'{row["blood_type"]}\', \'{row["last_appointment"]}\')'
+
+    print(data_string)
 
     cursor = mysql.connection.cursor()
-    cursor.execute(''' INSERT INTO user_data (name, email) VALUES(%s,%s)''',
-                   ('test', 'test@example.com'))
+    cursor.execute(data_string)
     mysql.connection.commit()
     cursor.close()
 
@@ -46,7 +51,7 @@ def save_data():
 def create_tables():
     cursor = mysql.connection.cursor()
     cursor.execute(
-        ''' CREATE TABLE user_data (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR(40), email VARCHAR(40))''')
+        ''' CREATE TABLE user_data (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR(40), email VARCHAR(40), blood_type VARCHAR(40), last_appointment VARCHAR(40))''')
     mysql.connection.commit()
     cursor.close()
 
