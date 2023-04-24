@@ -18,4 +18,4 @@
 
 ## Go to localhost:3000
 
-## Upload a file with user data and it should save to the db
+## Upload a file with user data and it should save to the db and be reviewable on the review page
