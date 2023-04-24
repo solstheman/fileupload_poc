@@ -2,3 +2,45 @@
   height: 98vh;
   box-shadow: 10px 0px 10px -10px rgba(0,0,0,0.5);
 }
+
+.page_container{
+  margin-top: 5rem;
+}
+
+.primary_button {
+  border-radius: 5px;
+  background-color: #62C8D1;
+  border-color: #62C8D1;
+  color: white;
+  text-decoration: none;
+  padding: 1rem;
+  width: 100%;
+  cursor: pointer;
+  font-size: large;
+  display: block;
+}
+
+.primary_button:hover {
+  background-color: #337c83;
+}
+
+.secondary_button {
+  border-radius: 5px;
+  background-color: #c2cc56;
+  border-color: #c2cc56;
+  color: white;
+  text-decoration: none;
+  padding: 1rem;
+  width: 100%;
+  cursor: pointer;
+  font-size: large;
+  display: block;
+}
+
+.secondary_button:hover {
+  background-color: #a7b13a;
+}
+
+.file_details {
+  border: 1px solid black
+}

@@ -26,6 +26,10 @@ const App = () => {
     saveFile(file);
   };
 
+  const downloadTemplate = () => {
+    alert("template downloaded");
+  };
+
   return (
     <div className="row">
       <div className="col-3 nav_panel">
@@ -35,34 +39,58 @@ const App = () => {
           </div>
         </div>
       </div>
-      <div className="col-9">
-        <div className="text-center mt-4">
-          <button onClick={() => fileInputRef.current.click()}>Upload</button>
-          {file && (
-            <div className="row justify-content-center">
-              <div className="col align-self-end">
-                {file.name} - {Math.round(file.size / 1024)}kb
+      <div className="col-9 p-4 page_container">
+        <div className="row justify-content-center">
+          <h5 className="col-8">
+            Please click the Upload button below to select a file to be
+            processed into our system. You will have a chance to review the file
+            before submitting. If needed, a template with the necessary columns
+            can be downloaded using the Download Template button.
+          </h5>
+        </div>
+        <div className="row justify-content-center mt-4">
+          <div className="text-center col-3">
+            <a
+              className="primary_button"
+              onClick={() => fileInputRef.current.click()}
+            >
+              Select File for Upload
+            </a>
+          </div>
+          <div className="text-center col-3">
+            <a className="secondary_button" onClick={() => downloadTemplate()}>
+              Download Template
+            </a>
+          </div>
+        </div>
+        {file && (
+          <div className="row justify-content-center mt-4">
+            <div className="col-4 file_details p-4">
+              <div className="row">
+                <h5 className="col-4">File Name:</h5>
+                <h6 className="col">{file.name}</h6>
               </div>
-              <div
-                className="col-1 align-self-start cursor-pointer"
-                onClick={() => setFile(null)}
-                role="button"
-              >
-                X
+              <div className="row">
+                <h5 className="col-4">File Size:</h5>
+                <h6 className="col">{Math.round(file.size / 1024)}kb</h6>
               </div>
-              <div className="row" onClick={onSubmit}>
-                <button>Submit</button>
+              <div className="row justify-content-center mt-2">
+                <div className="col-8 text-center">
+                  <a onClick={onSubmit} className="primary_button">
+                    Submit
+                  </a>
+                </div>
               </div>
             </div>
-          )}
-          <div className="d-none">
-            <input
-              accept=".csv"
-              type="file"
-              ref={fileInputRef}
-              onChange={onFileSelect}
-            />
           </div>
+        )}
+        <div className="d-none">
+          <input
+            accept=".csv"
+            type="file"
+            ref={fileInputRef}
+            onChange={onFileSelect}
+          />
         </div>
       </div>
     </div>
