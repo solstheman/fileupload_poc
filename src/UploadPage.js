@@ -1,29 +1,54 @@
 import { useRef, useState } from "react";
 
-const saveFile = (file) => {
+const saveFile = (file, successCallback, failureCallback) => {
   const documentData = new FormData();
   documentData.append("file", file);
   fetch("/save", {
     method: "POST",
     body: documentData,
-  }).then(async (res) => {
-    const data = await res.json();
-  });
+  })
+    .then(async (res) => {
+      const data = await res.json();
+      successCallback("Successfully uploaded patient data");
+    })
+    .catch(() => {
+      failureCallback("Unable to save patient data");
+    });
 };
 
 const UploadPage = () => {
   const [file, setFile] = useState(null);
+  const [success, setSuccess] = useState(null);
+  const [error, setError] = useState(null);
   const fileInputRef = useRef();
   const onFileSelect = (e) => {
     const file = e.target.files[0];
     setFile(file);
+    setSuccess(null);
+    setError(null);
   };
 
   const onSubmit = () => {
-    saveFile(file);
+    const successCallback = (message) => {
+      setFile(null);
+      setSuccess(message);
+    };
+    const failureCallback = (error) => {
+      setError(error);
+    };
+    saveFile(file, successCallback, failureCallback);
   };
 
   const downloadTemplate = () => {
+    let csvContent = "name, email";
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const href = window.URL.createObjectURL(blob);
+    const clickDownloader = () => {
+      const element = document.getElementById("downloadRef");
+      if (!!element) {
+        element.click();
+      }
+    };
     alert("template downloaded");
   };
   return (
@@ -51,6 +76,16 @@ const UploadPage = () => {
           </a>
         </div>
       </div>
+      {success && (
+        <div className="row justify-content-center mt-4">
+          <div className="col-8 text-success text-center">{success}</div>
+        </div>
+      )}
+      {error && (
+        <div className="row justify-content-center mt-4">
+          <div className="col-8 text-danger text-center">{error}</div>
+        </div>
+      )}
       {file && (
         <div className="row justify-content-center mt-4">
           <div className="col-4 file_details p-4">
