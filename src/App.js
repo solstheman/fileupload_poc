@@ -22,7 +22,7 @@ const App = () => {
   return (
     <div className="row">
       <div className="col-3 nav_panel">
-        <div className="row">
+        <div className="row mt-2">
           <div className="col-12 text-center">
             <img src="https://care-harmony.com/wp-content/uploads/2022/02/careharmony_logo.png"></img>
           </div>

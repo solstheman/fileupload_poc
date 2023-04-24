@@ -47,12 +47,12 @@
 
 .nav_row {
   margin-top: 3rem;
-  padding-left: 4rem;
 }
 
 .nav_item {
   font-size: x-large;
   padding: 1rem;
+  padding-left: 4rem;
   margin-top: 1rem;
   cursor: pointer;
 }

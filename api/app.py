@@ -20,6 +20,13 @@ def index():
     return 'success'
 
 
+@app.route('/patient', methods=['POST'])
+def patient():
+    data = request.get_json()
+    print(data)
+    return jsonify({})
+
+
 @app.route('/save', methods=['POST'])
 def save_data():
     file = request.files['file']
