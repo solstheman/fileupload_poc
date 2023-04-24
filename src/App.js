@@ -1,33 +1,22 @@
 import "./App.css";
-import { useRef, useState } from "react";
-
-const saveFile = (file) => {
-  const documentData = new FormData();
-  documentData.append("file", file);
-  fetch("/save", {
-    method: "POST",
-    body: documentData,
-  }).then(async (res) => {
-    const data = await res.json();
-    console.log(data);
-  });
-};
+import { useState } from "react";
+import UploadPage from "./UploadPage";
+import ReviewPage from "./ReviewPage";
+import DevelopPage from "./DevelopPage";
 
 const App = () => {
-  const [file, setFile] = useState(null);
-  const fileInputRef = useRef();
+  const [page, setPage] = useState("upload");
 
-  const onFileSelect = (e) => {
-    const file = e.target.files[0];
-    setFile(file);
-  };
-
-  const onSubmit = () => {
-    saveFile(file);
-  };
-
-  const downloadTemplate = () => {
-    alert("template downloaded");
+  const getCurrentPage = () => {
+    switch (page) {
+      case "upload":
+      default:
+        return <UploadPage />;
+      case "review":
+        return <ReviewPage />;
+      case "develop":
+        return <DevelopPage />;
+    }
   };
 
   return (
@@ -38,61 +27,19 @@ const App = () => {
             <img src="https://care-harmony.com/wp-content/uploads/2022/02/careharmony_logo.png"></img>
           </div>
         </div>
-      </div>
-      <div className="col-9 p-4 page_container">
-        <div className="row justify-content-center">
-          <h5 className="col-8">
-            Please click the Upload button below to select a file to be
-            processed into our system. You will have a chance to review the file
-            before submitting. If needed, a template with the necessary columns
-            can be downloaded using the Download Template button.
-          </h5>
-        </div>
-        <div className="row justify-content-center mt-4">
-          <div className="text-center col-3">
-            <a
-              className="primary_button"
-              onClick={() => fileInputRef.current.click()}
-            >
-              Select File for Upload
-            </a>
+        <div className="row justify-content-left nav_row">
+          <div className="col-12 nav_item" onClick={() => setPage("upload")}>
+            Upload Patient Data
           </div>
-          <div className="text-center col-3">
-            <a className="secondary_button" onClick={() => downloadTemplate()}>
-              Download Template
-            </a>
+          <div className="col-12 nav_item" onClick={() => setPage("review")}>
+            Review Patients
           </div>
-        </div>
-        {file && (
-          <div className="row justify-content-center mt-4">
-            <div className="col-4 file_details p-4">
-              <div className="row">
-                <h5 className="col-4">File Name:</h5>
-                <h6 className="col">{file.name}</h6>
-              </div>
-              <div className="row">
-                <h5 className="col-4">File Size:</h5>
-                <h6 className="col">{Math.round(file.size / 1024)}kb</h6>
-              </div>
-              <div className="row justify-content-center mt-2">
-                <div className="col-8 text-center">
-                  <a onClick={onSubmit} className="primary_button">
-                    Submit
-                  </a>
-                </div>
-              </div>
-            </div>
+          <div className="col-12 nav_item" onClick={() => setPage("develop")}>
+            Developers
           </div>
-        )}
-        <div className="d-none">
-          <input
-            accept=".csv"
-            type="file"
-            ref={fileInputRef}
-            onChange={onFileSelect}
-          />
         </div>
       </div>
+      <div className="col-9 p-4 page_container">{getCurrentPage()}</div>
     </div>
   );
 };
