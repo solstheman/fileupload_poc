@@ -76,7 +76,21 @@ const ReviewPage = () => {
             </div>
           )}
         </div>
-        {patientInfo && <div className="row">{patientInfo.email}</div>}
+        {patientInfo && (
+          <div className="row justify-content-center mt-4">
+            <h4 className="col-12">Patient Info</h4>
+            <div className="col-6 file_details p-4">
+              <div className="row">
+                <h5 className="col-4">Email:</h5>
+                <h6 className="col">{patientInfo.email}</h6>
+              </div>
+              <div className="row">
+                <h5 className="col-4">Name:</h5>
+                <h6 className="col">{patientInfo.name}</h6>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
