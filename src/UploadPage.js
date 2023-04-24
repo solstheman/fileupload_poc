@@ -8,7 +8,6 @@ const saveFile = (file) => {
     body: documentData,
   }).then(async (res) => {
     const data = await res.json();
-    console.log(data);
   });
 };
 

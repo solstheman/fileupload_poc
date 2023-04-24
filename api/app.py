@@ -23,8 +23,9 @@ def index():
 @app.route('/patient', methods=['POST'])
 def patient():
     data = request.get_json()
-    print(data)
-    return jsonify({})
+    email = data.get('email')
+    patient_data = get_patient_data(email)
+    return jsonify(patient_data)
 
 
 @app.route('/save', methods=['POST'])
@@ -48,3 +49,14 @@ def create_tables():
         ''' CREATE TABLE user_data (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR(40), email VARCHAR(40))''')
     mysql.connection.commit()
     cursor.close()
+
+
+def get_patient_data(email):
+    cursor = mysql.connection.cursor()
+    cursor.execute(
+        ''' SELECT * FROM user_data WHERE email = %s''', [email])
+    rows = cursor.fetchall()
+    df = pd.DataFrame.from_records(
+        rows, columns=[x[0] for x in cursor.description])
+    cursor.close()
+    return df.to_dict(orient='records')

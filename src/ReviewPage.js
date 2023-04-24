@@ -1,24 +1,44 @@
 import { useState } from "react";
 
-const getPatient = (email) => {
-  console.log("here");
+const getPatient = (email, successCallback, failureCallback) => {
   fetch("/patient", {
     method: "POST",
-    body: { email },
-  }).then(async (res) => {
-    const data = await res.json();
-    console.log(data);
-  });
+    body: JSON.stringify({ email }),
+    headers: new Headers({
+      "content-type": "application/json",
+    }),
+  })
+    .then(async (res) => {
+      const data = await res.json();
+      if (data.length > 0) {
+        successCallback(data[0]);
+      } else {
+        failureCallback("No data found for user " + email);
+      }
+    })
+    .catch((error) => {
+      failureCallback(error.message);
+    });
 };
 
 const ReviewPage = () => {
   const [email, setEmail] = useState(null);
   const [error, setError] = useState(null);
+  const [patientInfo, setPatientInfo] = useState(null);
+
+  const successCallback = (result) => {
+    setPatientInfo(result);
+  };
+
+  const failureCallback = (error) => {
+    setError(error);
+  };
+
   const submit = () => {
     if (!email) {
       setError("Email Address is required");
     } else {
-      getPatient(email);
+      getPatient(email, successCallback, failureCallback);
     }
   };
   return (
@@ -56,6 +76,7 @@ const ReviewPage = () => {
             </div>
           )}
         </div>
+        {patientInfo && <div className="row">{patientInfo.email}</div>}
       </div>
     </div>
   );
